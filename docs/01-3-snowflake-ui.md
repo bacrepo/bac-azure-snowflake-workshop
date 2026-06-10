@@ -1,13 +1,13 @@
 ---
-title: "Lesson 00 — Setup & first query"
+title: "Lesson 01 — Setup & first query"
 ---
 
-# Lesson 00 — Setup & first query
+# Lesson 01 — Setup & first query
 
 **Goal:** sign in to Snowflake, run your very first query, and learn your way
 around the interface.
 
-[← Back to home](index.md) · [Next: Architecture →](02-architecture.md)
+[← Back to Home](index.md)
 
 ---
 
@@ -16,8 +16,8 @@ around the interface.
 Snowsight is Snowflake's web interface — where you'll spend most of this
 workshop.
 
-1. Open the account URL your instructor gave you (it looks like
-   `https://<account>.snowflakecomputing.com`).
+1. Open the account URL:
+   **<https://tknjgnq-xc47183.snowflakecomputing.com>**
 2. Enter your **username** and **password**.
 3. You'll land in **Snowsight**.
 
@@ -33,11 +33,14 @@ A *worksheet* is where you write and run SQL.
 Paste this in and press **Run** (or `Cmd/Ctrl + Enter`):
 
 ```sql
-SELECT VERSION();
+SELECT CURRENT_VERSION();
 ```
 
 You should see the Snowflake version number. 🎉 You just ran a query against a
-cloud data warehouse.
+cloud data platform.
+
+> ⚠️ It's `CURRENT_VERSION()`, **not** `VERSION()` — the latter errors with
+> "Unknown function VERSION".
 
 ## 4. A couple more to get oriented
 
@@ -50,14 +53,14 @@ SELECT CURRENT_TIMESTAMP();
 ```
 
 If `CURRENT_WAREHOUSE()` returns `NULL`, you don't have compute selected yet —
-that's exactly what the next lessons fix.
+that's exactly what the next lesson fixes.
 
 ---
 
 ## Recap
 
 - **Snowsight** = the web UI. **Worksheets** = where you run SQL.
-- `SELECT VERSION();` confirms you're connected.
+- `SELECT CURRENT_VERSION();` confirms you're connected.
 - `CURRENT_USER / ROLE / WAREHOUSE` tell you the context every query runs in.
 
-[← Back to home](index.md) · [Next: Architecture →](02-architecture.md)
+[← Back to Home](index.md)

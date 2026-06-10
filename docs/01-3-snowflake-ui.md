@@ -1,8 +1,8 @@
 ---
-title: "Lesson 01 — Setup & first query"
+title: "DEMO 01 — Setup & first query"
 ---
 
-# Lesson 01 — Setup & first query
+# DEMO 01 — Setup & first query
 
 **Goal:** sign in to Snowflake, run your very first query, and learn your way
 around the interface.

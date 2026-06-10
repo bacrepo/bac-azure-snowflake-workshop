@@ -8,6 +8,7 @@ __pycache__/
 *.py
 python/
 .Python
+.claude/
 
 # ─────────────────────────────────────────────────────────────
 # SQL — internal command/scripts, NEVER published

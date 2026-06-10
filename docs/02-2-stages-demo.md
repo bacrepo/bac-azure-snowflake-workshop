@@ -39,13 +39,14 @@ Pim,GraphicsTablet,7800
 ## Step 1 — Create schema & internal stage
 
 ```sql
-USE ROLE BAC_DE_ROLE;
+USE ROLE BAC_PLATFORM_ROLE;
 USE WAREHOUSE WORKSHOP_WH;
+CREATE DATABASE IF NOT EXISTS USERXX;
+GRANT OWNERSHIP ON DATABASE USERXX TO ROLE BAC_DE_ROLE COPY CURRENT GRANTS;
 
-CREATE DATABASE IF NOT EXISTS USER00;
-CREATE SCHEMA IF NOT EXISTS USER00.RAW;
-USE SCHEMA USER00.RAW;
-
+USE ROLE BAC_DE_ROLE;
+CREATE SCHEMA IF NOT EXISTS USERXX.RAW;
+USE SCHEMA USERXX.RAW;
 -- Internal stage — Snowflake stores the files for you
 CREATE OR REPLACE STAGE stage_manual;
 ```
@@ -55,10 +56,15 @@ CREATE OR REPLACE STAGE stage_manual;
 ## Step 2 — Create file formats
 
 ```sql
-CREATE OR REPLACE FILE FORMAT format_csv
+CREATE OR REPLACE FILE FORMAT format_csv_no_header
   TYPE = 'CSV'
   FIELD_OPTIONALLY_ENCLOSED_BY = '"'
   SKIP_HEADER = 1;
+
+CREATE OR REPLACE FILE FORMAT format_csv
+  TYPE = 'CSV'
+  FIELD_OPTIONALLY_ENCLOSED_BY = '"'
+  PARSE_HEADER = TRUE;
 
 CREATE OR REPLACE FILE FORMAT format_parquet
   TYPE = 'PARQUET';
@@ -94,7 +100,7 @@ CREATE OR REPLACE TABLE sales_csv_manual (
 
 COPY INTO sales_csv_manual
   FROM @stage_manual/Demo.csv
-  FILE_FORMAT = (FORMAT_NAME = format_csv);
+  FILE_FORMAT = (FORMAT_NAME = format_csv_no_header);
 
 SELECT * FROM sales_csv_manual;
 ```
@@ -170,48 +176,12 @@ SELECT * FROM sales_parquet_infer;
 
 ---
 
-## Step 7 — Create an external stage (Azure ADLS)
-
-Now connect Snowflake to your **Azure Data Lake Storage** so it can read files
-directly from the cloud.
-
-```sql
-CREATE OR REPLACE STAGE stage_azure
-  URL = 'azure://dlsbacpocsnowflake.blob.core.windows.net/rawbgc/'
-  CREDENTIALS = ( AZURE_SAS_TOKEN = 'sv=2026-02-06&ss=bf&srt=sco&sp=rlx&se=2026-06-17T16:48:05Z&st=2026-06-10T08:33:05Z&spr=https&sig=tihpb7YnzyKqm7Va0bvjTD6WCnvNsMiRJi42vkEtTPY%3D' );
-```
-
-> **Note:** this SAS token expires on **2026-06-17**. If the workshop is after
-> that date, generate a new one in the Azure Portal.
-
-Verify:
-
-```sql
-LIST @stage_azure;
-```
-
-If you see files listed, the connection works.
-
-Now you can load data from Azure the same way:
-
-```sql
-COPY INTO my_table
-  FROM @stage_azure/path/to/file.csv
-  FILE_FORMAT = (FORMAT_NAME = format_csv);
-```
-
----
-
 ## Recap — what we built
 
 ```
                           ┌──────────────────────────────────┐
-  Demo.csv ──▶ + Files ──▶│  @stage_manual  (internal stage) │──▶ COPY INTO ──▶ sales_from_csv
-  Demo.parquet ──────────▶│                                  │──▶ COPY INTO ──▶ sales_from_parquet
-                          └──────────────────────────────────┘
-
-                          ┌──────────────────────────────────┐
-  azcopy ──▶ Azure ADLS ──▶│  @stage_azure   (external stage) │──▶ COPY INTO ──▶ any table
+  Demo.csv ──▶ + Files ──▶│  @stage_manual  (internal stage) │──▶ COPY INTO ──▶ sales_csv_manual
+  Demo.parquet ──────────▶│                                  │──▶ COPY INTO ──▶ sales_parquet_infer
                           └──────────────────────────────────┘
 ```
 
@@ -221,8 +191,8 @@ COPY INTO my_table
 | Internal stage | `CREATE STAGE stage_manual` |
 | CSV format | `CREATE FILE FORMAT format_csv TYPE = 'CSV' ...` |
 | Parquet format | `CREATE FILE FORMAT format_parquet TYPE = 'PARQUET'` |
-| Table from CSV | Define columns yourself, then `COPY INTO` |
-| Table from Parquet | `INFER_SCHEMA` + `USING TEMPLATE` — no manual schema |
-| External stage (Azure) | `CREATE STAGE stage_azure URL = 'azure://...' CREDENTIALS = (...)` |
+| Table from CSV (manual) | Define columns yourself, then `COPY INTO` |
+| Table from CSV (inferred) | `INFER_SCHEMA` + `USING TEMPLATE` + `COPY INTO` |
+| Table from Parquet (inferred) | `INFER_SCHEMA` + `USING TEMPLATE` — no manual schema |
 
-[← Back to Home](index.md)
+[← Back to Home](index.md) | [Next: External stage →](02-3-external-stage.md)

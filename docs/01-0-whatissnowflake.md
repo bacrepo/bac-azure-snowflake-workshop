@@ -57,23 +57,9 @@ stack is a loop — and Snowflake aims to run the entire loop in one platform:
               Snowpark)    queries)    notebooks)  Streamlit)
 ```
 
-Key capabilities at a glance:
-
-| Capability | One-liner |
-| --- | --- |
-| **Cortex AI** | Run LLMs (Claude, Llama, Mistral) directly in SQL — data never leaves Snowflake |
-| **Cortex Code** | AI coding assistant in Snowsight — drafts and explains SQL/Python |
-| **Snowflake Intelligence** | Business users ask questions in plain English, get governed answers |
-| **Cortex Agents** | AI that reasons, plans, and acts on your data |
-| **Snowpark** | Write Python / Java / Scala — runs inside Snowflake's compute |
-| **Notebooks** | Interactive Python + SQL — like Jupyter, but inside Snowflake |
-| **Streamlit** | Build data apps with just Python — no front-end stack needed |
-| **Snowpipe** | Auto-load files the moment they land on a stage (serverless) |
-| **Snowpipe Streaming** | Ingest rows from apps / Kafka with sub-second latency |
-
-> Each of these is covered in detail in
-> **[Snowflake features →](01-1-snowflake-features.md)** and later hands-on
-> lessons.
+Snowflake covers the full loop — from ingestion (Snowpipe) through engineering
+(SQL, Snowpark) to AI (Cortex) and apps (Streamlit). Each capability is covered
+in detail in **[Snowflake features →](01-1-snowflake-features.md)**.
 
 ---
 
@@ -125,7 +111,5 @@ perspective, it's just a URL in a browser.
   Intelligence, Agents, Snowpark, Notebooks, Streamlit, and Snowpipe.
 - BAC pays via **Azure Marketplace Private Offer** — consolidated on your Azure
   invoice.
-- Next: **[Snowflake features →](01-1-snowflake-features.md)** for the
-  technical deep dive.
 
-[← Back to Home](index.md)
+[← Back to Home](index.md) | [Next: Snowflake features →](01-1-snowflake-features.md)

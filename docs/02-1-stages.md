@@ -11,6 +11,49 @@ title: "Stages - Path to Snowflake Data"
 
 ---
 
+## The big picture: land first, load second
+
+A common mistake is piping data **directly** from source systems into Snowflake.
+The recommended pattern is to **land files first** in cloud object storage, then
+have Snowflake read from there via a **stage**.
+
+```
+  Source Systems
+       │
+       ▼
+ ┌───────────────────────────────────────────────┐
+ │  Cloud Object Storage  (the "landing zone")   │
+ │                                                │
+ │  Azure → ADLS Gen2 / Blob Storage             │
+ │  AWS   → S3                                   │
+ │  GCP   → GCS                                  │
+ └───────────────┬───────────────────────────────┘
+                 │  External Stage
+                 ▼
+ ┌───────────────────────────────────────────────┐
+ │            Snowflake                           │
+ │                                                │
+ │  COPY INTO  /  Snowpipe  /  Snowpipe Streaming │
+ │        ↓                                       │
+ │  Bronze → Silver → Gold                        │
+ └───────────────────────────────────────────────┘
+```
+
+### Why land first, load second?
+
+| Benefit | Explanation |
+|---------|-------------|
+| **Decouple ingestion from transformation** | Source systems push files on their own schedule; Snowflake picks them up independently — no tight coupling |
+| **Replay & reprocess** | Raw files stay in storage; if a load fails or logic changes, just re-ingest — no need to ask the source again |
+| **Lower cost** | Object storage is far cheaper than Snowflake credits; keep the warehouse off until data is ready |
+| **Platform-native tooling** | Use ADF (Azure), Glue (AWS), or Dataflow (GCP) for extraction — tools built for moving data at scale |
+| **Security boundary** | Landing zone can sit behind its own network/IAM policies before Snowflake ever touches the data |
+
+> 💡 **Rule of thumb:** let each platform do what it does best — cloud
+> services move data, Snowflake transforms and serves it.
+
+---
+
 ## What is a stage?
 
 A **stage** is a pointer to a folder that Snowflake can read files from.
@@ -159,15 +202,96 @@ COPY INTO my_table FROM @az_external_stage;    -- load it
 
 ---
 
+## 4 — Medallion Architecture: organize data in layers
+
+Once files land via a stage, data flows through **progressive layers**, getting
+cleaner and more reliable at each step. This is the **Medallion Architecture**.
+
+```
+ Cloud Storage          Snowflake
+ ┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐
+ │  FILES   │───▶│  BRONZE  │───▶│  SILVER  │───▶│   GOLD   │
+ │ (landing │    │ (as-is   │    │ (cleaned,│    │ (business│
+ │  zone)   │    │  copy)   │    │  joined) │    │  ready)  │
+ └──────────┘    └──────────┘    └──────────┘    └──────────┘
+   ADLS/S3/GCS     COPY INTO       transforms      aggregates,
+                   Snowpipe        & standards      models, KPIs
+```
+
+### The layers
+
+| Layer | What happens | Data quality |
+|-------|-------------|--------------|
+| **Files in cloud storage** | Source systems land raw files (CSV, Parquet, JSON) in ADLS / S3 / GCS | Untouched — exactly as the source sent it |
+| **Bronze** | `COPY INTO` or Snowpipe loads files as-is into Snowflake tables | Raw copy — schema matches the source, no transformation yet |
+| **Silver** | Cleansing, deduplication, type casting, standardizing column names, joining reference data | Clean & consistent — ready for analysts to explore |
+| **Gold** | Aggregations, business logic, KPIs, dimensional models, reporting views | Business-ready — trusted numbers for dashboards and decisions |
+
+### Many names, same idea
+
+| Layer | Medallion | Also called | Also called | Also called |
+|-------|-----------|-------------|-------------|-------------|
+| Files from source | **Stage/External** | RAW / STAGE | LANDING | SOURCE |
+| After COPY INTO Snowflake | **Bronze** | STAGING | RAW | INGESTED |
+| After cleansing / standardize | **Silver** | CURATED | PROCESSED | CONFORMED |
+| Ready to use | **Gold** | ANALYTICS | CURATED | PRESENTATION |
+
+> Don't get hung up on naming. Pick one convention for your project and stick
+> with it. What matters is the **progression**: raw → clean → ready.
+
+### Example: Snowflake schemas as layers
+
+A common pattern is to use **one schema per layer** inside the same database:
+
+```sql
+-- One schema per medallion layer
+CREATE SCHEMA IF NOT EXISTS bronze;   -- raw loads land here
+CREATE SCHEMA IF NOT EXISTS silver;   -- cleaned & standardized
+CREATE SCHEMA IF NOT EXISTS gold;     -- business-ready
+
+-- Bronze: raw copy from landing zone
+COPY INTO bronze.sales
+  FROM @landing_stage/sales/
+  FILE_FORMAT = (TYPE = PARQUET)
+  MATCH_BY_COLUMN_NAME = CASE_INSENSITIVE;
+
+-- Silver: clean and standardize
+CREATE OR REPLACE TABLE silver.sales AS
+SELECT
+    sale_id,
+    TRIM(customer_name)              AS customer_name,
+    sale_amount::NUMBER(12,2)        AS sale_amount,
+    TO_DATE(sale_date, 'YYYY-MM-DD') AS sale_date
+FROM bronze.sales
+WHERE sale_id IS NOT NULL;
+
+-- Gold: aggregate for reporting
+CREATE OR REPLACE TABLE gold.daily_sales AS
+SELECT
+    sale_date,
+    COUNT(*)        AS total_orders,
+    SUM(sale_amount) AS total_revenue
+FROM silver.sales
+GROUP BY sale_date;
+```
+
+> 💡 **Why separate schemas?** Each layer can have its own access roles —
+> data engineers own Bronze, analysts read Silver, dashboards query Gold.
+> This keeps governance clean and prevents accidental writes to curated data.
+
+---
+
 ## Recap
 
 | Concept | Key point |
 | --- | --- |
+| **Land first, load second** | Push files to cloud storage, then let Snowflake read via a stage |
 | **Stage** | A pointer to a folder Snowflake reads files from before `COPY INTO` |
 | **Internal stage** | Snowflake-managed — quick and easy, but rarely used in production |
 | **External stage** | Points at **your** cloud storage — **the standard approach** |
 | **SAS token** | Simplest way to authenticate an Azure external stage (recommended to start) |
 | **Storage Integration** | Production-grade credential management — no secrets in SQL |
 | **The pattern** | `azcopy` / `aws s3 cp` / `gsutil cp` → cloud storage → external stage → `COPY INTO` |
+| **Medallion Architecture** | Organize data in layers — Bronze (raw) → Silver (clean) → Gold (ready) |
 
-[← Back to Home](index.md)
+[← Back to Home](index.md) | [Next: Stages demo →](02-2-stages-demo.md)

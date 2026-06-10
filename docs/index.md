@@ -23,8 +23,10 @@ apps on top. Each lesson is short and ends with something you can run yourself.
 | 01-2 | [BAC solutions overview](01-2-solutions-overview.md) | The POC: SAP → Excel / SharePoint → Snowflake on Azure |
 | 01-3 | [Setup & first query](01-3-snowflake-ui.md) | Sign in to Snowsight, run your first query |
 | 02-0 | [The Snowflake platform](02-0-snowflake-platform.md) | Compute (warehouses), costing, and governance |
-| 03 | [Stages](03-stages.md) | Internal vs. external stages — where files land |
-| 04 | [Data engineering I](04-data-engineering.md) | Tables, `COPY INTO`, scripting, dynamic tables, time travel |
+| 02-1 | [Stages](02-1-stages.md) | Landing zones, internal vs. external stages, medallion architecture |
+| 02-2 | [Stages demo](02-2-stages-demo.md) | Hands-on: load CSV & Parquet via internal stage |
+| 02-3 | [External stage](02-3-external-stage.md) | Hands-on: connect Azure ADLS, load from external stage |
+| 03-0 | [Data engineering](03-0-data-engineering.md) | Tables, `COPY INTO`, scripting, dynamic tables, time travel |
 
 ## Afternoon — AI, notebooks & apps
 

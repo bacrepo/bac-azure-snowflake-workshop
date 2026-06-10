@@ -2,7 +2,7 @@
 title: "BAC Solutions Overview"
 ---
 
-#BAC solutions overview
+# BAC solutions overview
 
 **Goal:** understand the problem this workshop solves — and where Snowflake fits
 in the BAC data landscape on Azure.
@@ -49,4 +49,4 @@ land, engineer, govern, and serve data — then build AI agents and apps on top.
 - The plan: consolidate into **Snowflake on Azure**, then add **AI & apps**.
 - Everything you build today runs in **Snowsight** in your browser.
 
-[← Back to Home](index.md)
+[← Back to Home](index.md) | [Next: Setup & first query →](01-3-snowflake-ui.md)

@@ -295,4 +295,4 @@ runs inside Snowflake, secured by the same roles and policies as your tables.
 - Everything runs **inside Snowflake** — no data movement, no external
   infrastructure.
 
-[← Back to Home](index.md)
+[← Back to Home](index.md) | [Next: BAC solutions overview →](01-2-solutions-overview.md)

@@ -63,4 +63,4 @@ that's exactly what the next lesson fixes.
 - `SELECT CURRENT_VERSION();` confirms you're connected.
 - `CURRENT_USER / ROLE / WAREHOUSE` tell you the context every query runs in.
 
-[← Back to Home](index.md)
+[← Back to Home](index.md) | [Next: The Snowflake platform →](02-0-snowflake-platform.md)

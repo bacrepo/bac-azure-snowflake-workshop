@@ -1,0 +1,8 @@
+title: BAC Azure + Snowflake Workshop
+description: A hands-on teaching workshop for Snowflake on Azure.
+theme: jekyll-theme-cayman
+
+# Only build the curriculum; ignore repo housekeeping files.
+exclude:
+  - README.md
+  - LICENSE

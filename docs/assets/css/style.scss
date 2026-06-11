@@ -1,0 +1,17 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+// Widen the layout: Cayman caps content at 64rem by default.
+.main-content {
+  max-width: 90rem;
+}
+
+// Keep the header text aligned with the wider content column.
+.page-header {
+  @media screen and (min-width: 64em) {
+    padding-right: 6rem;
+    padding-left: 6rem;
+  }
+}

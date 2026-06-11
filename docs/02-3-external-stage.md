@@ -1,8 +1,8 @@
 ---
-title: "Demo 03 — External Stage (Azure ADLS)"
+title: "DEMO 03 — External Stage (Azure ADLS)"
 ---
 
-# Demo 03 — External Stage (Azure ADLS)
+# DEMO 03 — External Stage (Azure ADLS)
 
 **Goal:** connect Snowflake to Azure ADLS, explore the files on the stage,
 and load data from the external stage into tables.
@@ -25,6 +25,7 @@ container. Here's what's there:
 | `POC_EXCEL_DATA_3.xlsx` | Excel - SharePoint File |
 | `SAMPLE01.xlsx` | Excel |
 | `SAMPLE02.xlsx` | Excel |
+| `Target.xlsx` | Excel - sales targets |
 | `VBAK.csv` | CSV |
 | `VBAK.parquet` | Parquet |
 | `VBAK_INCR.parquet` | Parquet |
@@ -41,7 +42,7 @@ directly from the cloud.
 ```sql
 USE ROLE BAC_DE_ROLE;
 USE WAREHOUSE WORKSHOP_WH;
-USE SCHEMA USER00.RAW;
+USE SCHEMA USERXX.RAW;
 
 CREATE OR REPLACE STAGE stage_azure
   URL = 'azure://dlsbacpocsnowflake.blob.core.windows.net/rawbgc/'

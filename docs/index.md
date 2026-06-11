@@ -12,6 +12,18 @@ apps on top. Each lesson is short and ends with something you can run yourself.
 > [Snowsight](https://app.snowflake.com) (Snowflake's web UI) and run it.
 > Learning sticks when you type the commands yourself.
 
+**The shape of the day:** data engineering **first**, AI **on top**. The chat
+agent and dashboard you build in the afternoon are only trustworthy because of
+the pipeline you build in the morning — that ordering is the biggest lesson of
+the workshop.
+
+```
+  SAP / Excel / SharePoint
+     └▶ stage ─▶ bronze ─▶ silver ─▶ gold / agent.Sales     ← morning: engineering
+                                       ├▶ Snowflake Intelligence (chat)   ← afternoon:
+                                       └▶ Streamlit dashboard  (apps)        AI on top
+```
+
 ---
 
 ## Morning — foundations & data engineering
@@ -26,17 +38,29 @@ apps on top. Each lesson is short and ends with something you can run yourself.
 | 02-1 | [Stages](02-1-stages.md) | Landing zones, internal vs. external stages, medallion architecture |
 | 02-2 | [Stages demo](02-2-stages-demo.md) | Hands-on: load CSV & Parquet via internal stage |
 | 02-3 | [External stage](02-3-external-stage.md) | Hands-on: connect Azure ADLS, load from external stage |
-| 03-0 | [Data engineering](03-0-data-engineering.md) | Tables, `COPY INTO`, scripting, dynamic tables, time travel |
+| 03-0 | [Data engineering](03-0-data-engineering.md) | The engineer's loop: land → clean → conform → serve |
+| 03-1 | [Data engineering workshop](03-1-data-engineering-workshop.md) | Hands-on: SAP files → bronze → silver → `gold.Sales` |
+| 03-2 | [Data engineering II](03-2-more-data-engineering.md) | Hands-on: dynamic tables — a self-refreshing gold layer |
+| 03-3 | [Incremental data](03-3-incremental-data.md) | Hands-on: apply deltas with `DELETE` + `MERGE` / `INSERT` |
+| 03-4 | [Tasks & scheduling](03-4-task-and-schedule.md) | Hands-on: procedures, tasks, and task graphs — pipelines that run themselves |
 
-## Afternoon — AI, notebooks & apps
+## Afternoon — AI on top
 
 | #  | Lesson | What you'll learn |
 | -- | ------ | ----------------- |
-| 05 | [Cortex Code](05-cortex-code.md) | Snowflake's AI assistant for writing SQL & code |
-| 06 | [Data engineering II](06-notebooks-snowpark.md) | Notebooks, Snowpark, reading Excel from a stage |
-| 07 | [Why Excel is difficult](07-why-excel.md) | The hidden costs of spreadsheet-driven processes |
-| 08 | [Building a data agent](08-data-agent.md) | Cortex Agent, semantic models, Snowflake Intelligence |
-| 09 | [Building apps with Streamlit](09-streamlit.md) | Streamlit in Snowflake — data apps with no front-end stack |
+| 04-0 | [Cortex Code](04-0-cortex-code.md) | Snowflake's AI assistant for writing SQL & code |
+| 04-1 | [Agent-ready summary](04-1-summary-data.md) | Hands-on: build `agent.Sales` — the narrow, clean table AI reasons over |
+| 04-2 | [Let Cortex Code build the table](04-2-cortex-test.md) | Hands-on: same table, AI-drafted — you review, refine, verify |
+| 05-1 | [Notebooks & Snowpark](05-1-notebooks-snowpark.md) | Python for data engineers — DataFrames pushed down to the warehouse |
+| 05-2 | [Snowpark, end to end](05-2-snowpark-demo.md) | Hands-on: read → transform → write, `session.sql` & DataFrame API |
+| 06-1 | [Why Excel is difficult](06-1-why-excel.md) | The hidden costs of spreadsheet-driven processes |
+| 06-2 | [Excel is more difficult than anything](06-2-excel-is-difficult-than-anything.md) | Hands-on: load `SAMPLE01.xlsx` and feel every pain point |
+| 07-1 | [Snowflake Intelligence](07-1-snowflake-intelligence.md) | Cortex Analyst, semantic models — why they make or break chat-with-data; pricing |
+| 07-2 | [Snowflake Intelligence hands-on](07-2-snowflake-intelligence-hands-on.md) | Hands-on: semantic model on `agent.Sales`, then chat in Thai & English |
+| 08-1 | [Governance](08-1-governance.md) | Horizon — row/column policies at platform level, data catalog, lineage |
+| 08-2 | [Governance hands-on](08-2-governance-hands-on.md) | Hands-on: mask & filter `gold.Sales`, run as the read-only `BAC_DA_ROLE` |
+| 09-1 | [Streamlit introduction](09-1-streamlit-introduction.md) | Data apps in pure Python — no hosting, no auth code, RBAC built in |
+| 09-2 | [Streamlit hands-on](09-2-streamlit-hands-on.md) | Hands-on: AI-drafted sales dashboard on `agent.Sales` from one good prompt |
 
 ---
 

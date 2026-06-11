@@ -1,8 +1,12 @@
 ---
-title: "Lesson 05 — Data engineering II"
+title: "DEMO 05 — Data engineering II"
 ---
 
-# Lesson 05 — Data engineering II
+# DEMO 05 — Data engineering II
+
+**Goal:** turn the static `gold` layer into a **self-refreshing** one with a
+dynamic table — and learn which amount column to aggregate without
+double-counting.
 
 [← Back to Home](index.md)
 
@@ -73,7 +77,7 @@ SELECT * FROM gold.SalesSummary ORDER BY SalesMonth DESC LIMIT 20;
 ```sql
 -- When was the last refresh?
 SELECT * FROM TABLE(INFORMATION_SCHEMA.DYNAMIC_TABLE_REFRESH_HISTORY(
-  NAME => 'USER00_DB.GOLD.SALESSUMMARY'
+  NAME => 'USERXX.GOLD.SALESSUMMARY'
 )) ORDER BY REFRESH_START_TIME DESC LIMIT 5;
 ```
 
@@ -111,4 +115,7 @@ DROP DYNAMIC TABLE IF EXISTS gold.SalesSummary;
 | `NetValueHeader` (VBAK) | Header-level total — use for order-level reporting |
 | `DocumentDate → SalesMonth (YYYYMM)` | `TO_CHAR(DocumentDate, 'YYYYMM')` for monthly grain |
 
-[← Back to Home](index.md)
+**Next:** so far every load rebuilds everything. Real pipelines load only
+what changed — incremental loads.
+
+[← Back to Home](index.md) | [Next: Incremental data →](03-3-incremental-data.md)

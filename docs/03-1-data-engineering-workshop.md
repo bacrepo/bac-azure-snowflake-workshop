@@ -1,8 +1,12 @@
 ---
-title: "Lesson 04 — Data engineering workshop"
+title: "DEMO 04 — Data engineering workshop"
 ---
 
-# Lesson 04 — Data engineering workshop
+# DEMO 04 — Data engineering workshop
+
+**Goal:** build a complete medallion pipeline from real SAP files — external
+stage → external tables → bronze → silver → gold — ending in one query-ready
+`gold.Sales` table.
 
 [← Back to Home](index.md)
 
@@ -21,7 +25,7 @@ raw_azure → ext → bronze → silver → gold
 ```
 
 ```sql
-USE DATABASE USER00_DB;
+USE DATABASE USERXX;
 
 CREATE SCHEMA IF NOT EXISTS raw_azure;   -- external stage lives here
 CREATE SCHEMA IF NOT EXISTS ext;         -- external tables (all columns)
@@ -436,4 +440,7 @@ SELECT * FROM gold.Sales LIMIT 10;
 | **Silver** | `silver` | Rename SAP codes → business names | `NETWR` → `ItemNetValue` |
 | **Gold** | `gold` | Join VBAK + VBAP + VBEP, serve | `gold.Sales` |
 
-[← Back to Home](index.md)
+**Next:** `gold.Sales` goes stale the moment source data changes. Dynamic
+tables keep it fresh automatically.
+
+[← Back to Home](index.md) | [Next: Data engineering II →](03-2-more-data-engineering.md)

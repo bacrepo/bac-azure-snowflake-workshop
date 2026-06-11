@@ -1,11 +1,17 @@
 ---
-title: "Lesson 05 — Cortex Code"
+title: "Cortex Code"
 ---
 
-# Lesson 05 — Cortex Code
+# Cortex Code
 
 **Goal:** use Snowflake's built-in AI assistant to write and explain SQL and
 code — without leaving Snowsight.
+
+> **Welcome to the AI half of the workshop.** Notice the order we did things:
+> data engineering *first*, AI *second*. AI on top of messy data gives
+> confident wrong answers; AI on top of the clean silver/gold tables you built
+> this morning is genuinely useful. That ordering is the biggest lesson of
+> the day.
 
 [← Back to Home](index.md)
 
@@ -61,4 +67,4 @@ LIMIT 5;
 - The same models are callable as **`SNOWFLAKE.CORTEX.*`** SQL functions.
 - Treat output as a **draft** — review before you run.
 
-[← Back to Home](index.md)
+[← Back to Home](index.md) | [Next: Agent-ready summary →](04-1-summary-data.md)

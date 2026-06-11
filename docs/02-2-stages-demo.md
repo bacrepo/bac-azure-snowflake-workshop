@@ -1,8 +1,8 @@
 ---
-title: "Demo 02 — Stages Demo (Hands-on)"
+title: "DEMO 02 — Stages Demo (Hands-on)"
 ---
 
-# Demo 02 — Stages Demo (Hands-on)
+# DEMO 02 — Stages Demo (Hands-on)
 
 **Goal:** load CSV and Parquet files into Snowflake using an **internal stage**,
 then connect an **external stage** to Azure ADLS.
@@ -47,7 +47,7 @@ GRANT OWNERSHIP ON DATABASE USERXX TO ROLE BAC_DE_ROLE COPY CURRENT GRANTS;
 USE ROLE BAC_DE_ROLE;
 CREATE SCHEMA IF NOT EXISTS USERXX.RAW;
 USE SCHEMA USERXX.RAW;
--- Internal stage — Snowflake stores the files for you
+
 CREATE OR REPLACE STAGE stage_manual;
 ```
 

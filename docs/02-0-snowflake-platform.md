@@ -173,8 +173,9 @@ SHOW ROLES;
 USE ROLE SYSADMIN;
 ```
 
-Other governance building blocks you'll meet later: **masking policies** (hide
-sensitive columns), **row access policies**, **tags**, and **access history**.
+Other governance building blocks you'll meet in
+[Lesson 08](08-1-governance.md): **masking policies** (hide sensitive
+columns), **row access policies**, **tags**, and **access history**.
 
 ---
 

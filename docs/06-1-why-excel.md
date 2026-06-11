@@ -1,8 +1,8 @@
 ---
-title: "Lesson 07 — Why Excel is difficult"
+title: "Why Excel is difficult"
 ---
 
-# Lesson 07 — Why Excel is difficult
+# Why Excel is difficult
 
 **Goal:** name the real costs of spreadsheet-driven processes — so the case for
 moving to Snowflake is concrete, not just "it's modern."
@@ -53,4 +53,7 @@ point below, ask: *does this happen to us?*
   travel**.
 - Keep spreadsheets as a *presentation layer*, not the source of truth.
 
-[← Back to Home](index.md)
+**Next:** these aren't abstract complaints — you'll feel every one of them
+trying to load a single workbook in the hands-on.
+
+[← Back to Home](index.md) | [Next: Excel is more difficult than anything →](06-2-excel-is-difficult-than-anything.md)

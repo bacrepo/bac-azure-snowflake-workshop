@@ -1,8 +1,13 @@
 ---
-title: "Lesson 04 — Data engineering I"
+title: "Data engineering I"
 ---
 
-# Lesson 04 — Data engineering I
+# Data engineering I
+
+**Goal:** learn the data engineer's core loop — **Source → Land → Clean →
+Conform → Higher Value → Query-able**. This is the heart of the workshop:
+everything that comes later (AI agents, chat-with-data, dashboards) is only as
+good as the engineering you do here.
 
 [← Back to Home](index.md)
 
@@ -43,7 +48,7 @@ A single Azure container can hold many file types:
 | `Demo.csv` | CSV |
 | `Orders.parquet` / `Orders_INCR.parquet` | Parquet |
 | `POC_EXCEL_DATA_3.xlsx` | Excel |
-| `SAMPLE01.xlsx` / `SAMPLE02.xlsx` | Excel |
+| `SAMPLE01.xlsx` / `SAMPLE02.xlsx` / `Target.xlsx` | Excel |
 | `VBAK.csv` / `VBAK.parquet` / `VBAK_INCR.parquet` | CSV & Parquet |
 | `VBEP.csv` / `VBEP.parquet` | CSV & Parquet |
 
@@ -238,4 +243,7 @@ The data engineer's loop: **Source → Land → Clean → Conform → Higher Val
 | Higher value | **Dynamic tables** | Join, aggregate, enrich — auto-refreshed |
 | Recover | **Time travel** | `AT` / `BEFORE` / `UNDROP` as a safety net |
 
-[← Back to Home](index.md)
+**Next:** put the loop into practice — build a full medallion pipeline from
+real SAP files: external stage → external tables → bronze → silver → gold.
+
+[← Back to Home](index.md) | [Next: Data engineering workshop →](03-1-data-engineering-workshop.md)

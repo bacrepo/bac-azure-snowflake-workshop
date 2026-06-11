@@ -68,8 +68,11 @@ the workshop.
 
 You'll need:
 
-- A **Snowflake account** on Azure (your instructor provides the account URL).
-- A **username and password** from your instructor.
+- A **Snowflake account** on Azure — sign in at
+  [https://tknjgnq-xc47183.snowflakecomputing.com](https://tknjgnq-xc47183.snowflakecomputing.com).
+- A **username and password** from your instructor:
+  - **Username:** `USERXX` (replace `XX` with your assigned number)
+  - **Password:** `Workshop@2026!`
 - A modern web browser — everything runs in Snowsight, nothing to install.
 
 Ready? Start with **[What is Snowflake? →](01-0-whatissnowflake.md)**
